@@ -7,11 +7,12 @@ namespace Clases_para_Proyecto
 {
     public partial class frmMostrar : Form
     {
-        private cPasajero pasajero;
-        private List<cVuelo> vuelos;
-        private List<cReserva> reservas;
+        private cPasajero pasajero; // Datos de pasajero ya registrado en txt (puede ser nuevo o antiguo)
+        private List<cVuelo> vuelos; // Lista total de todos los vuelos disponibles
+        private List<cReserva> reservas; // Reservas hechas por el pasajero
+        
 
-        public frmMostrar(cPasajero pPasajero, List<cVuelo> pVuelos, List<cReserva> pReservas)
+        public frmMostrar(cPasajero pPasajero, List<cVuelo> pVuelos, List<cReserva> pReservas)// Recibe listas completas de vuelos y reservas [reservas por pesona forma "12345678|AV101|15|true"] 
         {
             InitializeComponent();
             pasajero = pPasajero;
@@ -29,7 +30,7 @@ namespace Clases_para_Proyecto
             this.Show();
         }
 
-        private void btnGestionarReservas_Click(object sender, EventArgs e)
+        private void btnGestionarReservas_Click(object sender, EventArgs e) // Boton de gestionar
         {
             var frmGestionar = new frmGestionar(pasajero, reservas);
             this.Hide();

@@ -37,6 +37,8 @@ namespace Clases_para_Proyecto
             btnEliminar.Enabled = false;
         }
 
+        
+
         private void dgvReservas_SelectionChanged(object sender, EventArgs e)
         {
             if (dgvReservas.SelectedRows.Count > 0)

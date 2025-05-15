@@ -77,5 +77,10 @@ namespace Clases_para_Proyecto
                 $"{p.Nombre}|{p.Apellido}|{p.DNI}|{p.FechaNac:yyyy-MM-dd}|{p.Telefono}|{p.Correo}");
             File.WriteAllLines(rutaArchivo, lineas);
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + $"{aTelefono} {aCorreo}";
+        }
     }
 }

@@ -93,5 +93,10 @@ namespace Clases_para_Proyecto
         public int CapacidadTotal { get => aCapacidadTotal; set => aCapacidadTotal = value; }
         public List<int> AsientosOcupados { get => aAsientosOcupados; }
         public int AsientosDisponibles { get => aCapacidadTotal - aAsientosOcupados.Count; }
+
+        public override string ToString()
+        {
+            return $"{CodigoVuelo} {FechaVuelo} {HoraVuelo} {Origen} {Destino}";
+        }
     }
 }

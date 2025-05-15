@@ -54,5 +54,10 @@ namespace Clases_para_Proyecto
         {
             return aNombre + ", " + aApellido;
         }
+
+        public override string ToString()
+        {
+            return $"{aDNI} {aNombre} {aApellido}";
+        }
     }
 }

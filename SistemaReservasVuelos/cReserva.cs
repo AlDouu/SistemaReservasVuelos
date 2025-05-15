@@ -58,7 +58,7 @@ namespace Clases_para_Proyecto
                         var nroAsiento = int.Parse(partes[2]);
                         var confirmada = bool.Parse(partes[3]);
 
-                        var pasajero = pasajeros.FirstOrDefault(p => p.DNI == dniPasajero);
+                        var pasajero = pasajeros.FirstOrDefault(p => p.DNI == dniPasajero);// Busca elemento
                         var vuelo = vuelos.FirstOrDefault(v => v.CodigoVuelo == codigoVuelo);
 
                         if (pasajero != null && vuelo != null)
@@ -86,5 +86,11 @@ namespace Clases_para_Proyecto
         public cVuelo Vuelo => aVuelo;
         public int NroAsiento => aNroAsiento;
         public bool Confirmada => aConfirmada;
+
+
+        public override string ToString()
+        {
+            return $"{aPasajero.ToString()} {aNroAsiento} {aConfirmada}";
+        }
     }
 }
