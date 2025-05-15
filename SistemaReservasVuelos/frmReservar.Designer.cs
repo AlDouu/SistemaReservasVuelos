@@ -29,93 +29,152 @@ namespace Clases_para_Proyecto
         /// </summary>
         private void InitializeComponent()
         {
-
-            this.dgvVuelos = new System.Windows.Forms.DataGridView();
-            this.cmbAsientos = new System.Windows.Forms.ComboBox();
-            this.btnConfirmar = new System.Windows.Forms.Button();
-            this.btnVolver = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVuelos)).BeginInit();
-            this.SuspendLayout();
+            dgvVuelos = new DataGridView();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn7 = new DataGridViewTextBoxColumn();
+            cmbAsientos = new ComboBox();
+            btnConfirmar = new Button();
+            btnVolver = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            ((System.ComponentModel.ISupportInitialize)dgvVuelos).BeginInit();
+            SuspendLayout();
             // 
             // dgvVuelos
             // 
-            this.dgvVuelos.Columns.Add("Codigo", "Código Vuelo");
-            this.dgvVuelos.Columns.Add("Origen", "Origen");
-            this.dgvVuelos.Columns.Add("Destino", "Destino");
-            this.dgvVuelos.Columns.Add("Fecha", "Fecha");
-            this.dgvVuelos.Columns.Add("Hora", "Hora");
-            this.dgvVuelos.Columns.Add("Asientos", "Asientos Disp.");
-            this.dgvVuelos.Columns.Add("Precio", "Precio");
-            this.dgvVuelos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvVuelos.Location = new System.Drawing.Point(20, 30);
-            this.dgvVuelos.Name = "dgvVuelos";
-            this.dgvVuelos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVuelos.Size = new System.Drawing.Size(600, 200);
-            this.dgvVuelos.TabIndex = 0;
+            dgvVuelos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvVuelos.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, dataGridViewTextBoxColumn6, dataGridViewTextBoxColumn7 });
+            dgvVuelos.Location = new Point(27, 46);
+            dgvVuelos.Margin = new Padding(4, 5, 4, 5);
+            dgvVuelos.Name = "dgvVuelos";
+            dgvVuelos.RowHeadersWidth = 51;
+            dgvVuelos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvVuelos.Size = new Size(800, 308);
+            dgvVuelos.TabIndex = 0;
+            
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Código Vuelo";
+            dataGridViewTextBoxColumn1.MinimumWidth = 6;
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Origen";
+            dataGridViewTextBoxColumn2.MinimumWidth = 6;
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Destino";
+            dataGridViewTextBoxColumn3.MinimumWidth = 6;
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Fecha";
+            dataGridViewTextBoxColumn4.MinimumWidth = 6;
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Hora";
+            dataGridViewTextBoxColumn5.MinimumWidth = 6;
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.HeaderText = "Asientos Disp.";
+            dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.Width = 125;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewTextBoxColumn7.HeaderText = "Precio";
+            dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            dataGridViewTextBoxColumn7.Width = 125;
             // 
             // cmbAsientos
             // 
-            this.cmbAsientos.FormattingEnabled = true;
-            this.cmbAsientos.Location = new System.Drawing.Point(120, 250);
-            this.cmbAsientos.Name = "cmbAsientos";
-            this.cmbAsientos.Size = new System.Drawing.Size(100, 21);
-            this.cmbAsientos.TabIndex = 1;
+            cmbAsientos.FormattingEnabled = true;
+            cmbAsientos.Location = new Point(160, 385);
+            cmbAsientos.Margin = new Padding(4, 5, 4, 5);
+            cmbAsientos.Name = "cmbAsientos";
+            cmbAsientos.Size = new Size(132, 28);
+            cmbAsientos.TabIndex = 1;
             // 
             // btnConfirmar
             // 
-            this.btnConfirmar.Location = new System.Drawing.Point(250, 250);
-            this.btnConfirmar.Name = "btnConfirmar";
-            this.btnConfirmar.Size = new System.Drawing.Size(120, 30);
-            this.btnConfirmar.TabIndex = 2;
-            this.btnConfirmar.Text = "CONFIRMAR";
-            this.btnConfirmar.UseVisualStyleBackColor = true;
+            btnConfirmar.Location = new Point(333, 385);
+            btnConfirmar.Margin = new Padding(4, 5, 4, 5);
+            btnConfirmar.Name = "btnConfirmar";
+            btnConfirmar.Size = new Size(160, 46);
+            btnConfirmar.TabIndex = 2;
+            btnConfirmar.Text = "CONFIRMAR";
+            btnConfirmar.UseVisualStyleBackColor = true;
+            btnConfirmar.Click += btnConfirmar_Click_1;
             // 
             // btnVolver
             // 
-            this.btnVolver.Location = new System.Drawing.Point(400, 250);
-            this.btnVolver.Name = "btnVolver";
-            this.btnVolver.Size = new System.Drawing.Size(120, 30);
-            this.btnVolver.TabIndex = 3;
-            this.btnVolver.Text = "VOLVER";
-            this.btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Location = new Point(533, 385);
+            btnVolver.Margin = new Padding(4, 5, 4, 5);
+            btnVolver.Name = "btnVolver";
+            btnVolver.Size = new Size(160, 46);
+            btnVolver.TabIndex = 3;
+            btnVolver.Text = "VOLVER";
+            btnVolver.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 253);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Asiento disponible:";
+            label1.AutoSize = true;
+            label1.Location = new Point(27, 389);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(136, 20);
+            label1.TabIndex = 4;
+            label1.Text = "Asiento disponible:";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(20, 10);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(137, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "VUELOS DISPONIBLES";
+            label2.AutoSize = true;
+            label2.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label2.Location = new Point(27, 15);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(176, 17);
+            label2.TabIndex = 5;
+            label2.Text = "VUELOS DISPONIBLES";
             // 
             // frmReservar
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 300);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.btnVolver);
-            this.Controls.Add(this.btnConfirmar);
-            this.Controls.Add(this.cmbAsientos);
-            this.Controls.Add(this.dgvVuelos);
-            this.Name = "frmReservar";
-            this.Text = "Realizar Reserva";
-            ((System.ComponentModel.ISupportInitialize)(this.dgvVuelos)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(853, 462);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(btnVolver);
+            Controls.Add(btnConfirmar);
+            Controls.Add(cmbAsientos);
+            Controls.Add(dgvVuelos);
+            Margin = new Padding(4, 5, 4, 5);
+            Name = "frmReservar";
+            Text = "Realizar Reserva";
+            ((System.ComponentModel.ISupportInitialize)dgvVuelos).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -127,5 +186,12 @@ namespace Clases_para_Proyecto
         private System.Windows.Forms.Button btnVolver;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     }
 }
