@@ -56,7 +56,6 @@ namespace Clases_para_Proyecto
             dgvVuelos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvVuelos.Size = new Size(800, 308);
             dgvVuelos.TabIndex = 0;
-            
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -136,6 +135,7 @@ namespace Clases_para_Proyecto
             btnVolver.TabIndex = 3;
             btnVolver.Text = "VOLVER";
             btnVolver.UseVisualStyleBackColor = true;
+            btnVolver.Click += btnVolver_Click_1;
             // 
             // label1
             // 

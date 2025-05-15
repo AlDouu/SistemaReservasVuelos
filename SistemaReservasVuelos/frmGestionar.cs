@@ -48,7 +48,7 @@ namespace Clases_para_Proyecto
             btnEliminar.Enabled = false;
         }
 
-        
+
 
         private void dgvReservas_SelectionChanged(object sender, EventArgs e)
         {
@@ -88,6 +88,11 @@ namespace Clases_para_Proyecto
         }
 
         private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnVolver_Click_1(object sender, EventArgs e)
         {
             this.Close();
         }

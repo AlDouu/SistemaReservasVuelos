@@ -108,7 +108,7 @@ namespace Clases_para_Proyecto
 
 
 
-        
+
 
 
         private void btnConfirmar_Click_1(object sender, EventArgs e)
@@ -137,10 +137,10 @@ namespace Clases_para_Proyecto
                 {
                     // Se puede ir a la ventana de pagos o simplemente guardar en el archivo validando que este pasajero no haya hecho una reserva en este vuelo antes
                     Console.WriteLine();
-                    
+
                 }
                 else { }
-                
+
             }
             else
             {
@@ -149,10 +149,15 @@ namespace Clases_para_Proyecto
 
         }
 
+        private void btnVolver_Click_1(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
 
 
         // Se puede usar evento de click sobre la tabla para almacenar los valores mostrados
         // Esto servirá solo para selecionar el codigo de vuelo (fecha y hora para validar que sea el mismo) y buscarlo en el atributo de vuelos pasado del anterior form
-        
+
     }
 }
