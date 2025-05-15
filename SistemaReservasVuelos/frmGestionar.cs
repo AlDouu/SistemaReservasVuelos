@@ -23,6 +23,17 @@ namespace Clases_para_Proyecto
         private void CargarReservas()
         {
             dgvReservas.Rows.Clear();
+            // Crear columnas para evitar error de inexistentes
+            if (dgvReservas.Columns.Count == 0)
+            {
+                dgvReservas.Columns.Add("CodigoVuelo", "Código Vuelo");
+                dgvReservas.Columns.Add("Origen", "Origen");
+                dgvReservas.Columns.Add("Destino", "Destino");
+                dgvReservas.Columns.Add("FechaVuelo", "Fecha");
+                dgvReservas.Columns.Add("NroAsiento", "Asiento");
+                dgvReservas.Columns.Add("Estado", "Estado");
+            }
+
             foreach (var reserva in pasajero.Reservas)
             {
                 dgvReservas.Rows.Add(
