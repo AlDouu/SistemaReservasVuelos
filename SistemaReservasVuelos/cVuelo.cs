@@ -16,7 +16,7 @@ namespace Clases_para_Proyecto
         private int aCapacidadTotal;
         private List<int> aAsientosOcupados;
 
-        public cVuelo(string pCodigoVuelo, DateTime pFechaVuelo, string pHoraVuelo, 
+        public cVuelo(string pCodigoVuelo, DateTime pFechaVuelo, string pHoraVuelo,
                      string pOrigen, string pDestino, int pCapacidadTotal, double pPrecio)
         {
             aCodigoVuelo = pCodigoVuelo;
@@ -36,17 +36,36 @@ namespace Clases_para_Proyecto
 
         public bool ReservarAsiento(int pNroAsiento)
         {
-            if (AsientosDisponibles > 0 && !aAsientosOcupados.Contains(pNroAsiento))
+            if (pNroAsiento < 1 || pNroAsiento > aCapacidadTotal)
+                return false;
+
+            lock (aAsientosOcupados) // Thread-safe para operaciones concurrentes
             {
-                aAsientosOcupados.Add(pNroAsiento);
-                return true;
+                if (!aAsientosOcupados.Contains(pNroAsiento))
+                {
+                    aAsientosOcupados.Add(pNroAsiento);
+                    return true;
+                }
             }
             return false;
         }
 
         public bool LiberarAsiento(int pNroAsiento)
         {
-            return aAsientosOcupados.Remove(pNroAsiento);
+            lock (aAsientosOcupados) // Thread-safe para operaciones concurrentes
+            {
+                return aAsientosOcupados.Remove(pNroAsiento);
+            }
+        }
+
+        public int ObtenerProximoAsientoDisponible()
+        {
+            for (int i = 1; i <= aCapacidadTotal; i++)
+            {
+                if (!aAsientosOcupados.Contains(i))
+                    return i;
+            }
+            return -1; // No hay asientos disponibles
         }
 
         public void MostrarDetalles()
@@ -66,10 +85,22 @@ namespace Clases_para_Proyecto
                     var partes = linea.Split('|');
                     if (partes.Length >= 7)
                     {
-                        var vuelo = new cVuelo(
-                            partes[0], DateTime.Parse(partes[1]), partes[2],
-                            partes[3], partes[4], int.Parse(partes[5]), double.Parse(partes[6]));
-                        vuelos.Add(vuelo);
+                        try
+                        {
+                            var vuelo = new cVuelo(
+                                partes[0],
+                                DateTime.Parse(partes[1]),
+                                partes[2],
+                                partes[3],
+                                partes[4],
+                                int.Parse(partes[5]),
+                                double.Parse(partes[6]));
+                            vuelos.Add(vuelo);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error al cargar vuelo: {ex.Message}");
+                        }
                     }
                 }
             }
@@ -78,7 +109,7 @@ namespace Clases_para_Proyecto
 
         public static void GuardarEnArchivo(string rutaArchivo, List<cVuelo> vuelos)
         {
-            var lineas = vuelos.Select(v => 
+            var lineas = vuelos.Select(v =>
                 $"{v.CodigoVuelo}|{v.FechaVuelo:yyyy-MM-dd}|{v.HoraVuelo}|{v.Origen}|{v.Destino}|{v.CapacidadTotal}|{v.Precio}");
             File.WriteAllLines(rutaArchivo, lineas);
         }
@@ -91,12 +122,13 @@ namespace Clases_para_Proyecto
         public string Destino { get => aDestino; set => aDestino = value; }
         public double Precio { get => aPrecio; set => aPrecio = value; }
         public int CapacidadTotal { get => aCapacidadTotal; set => aCapacidadTotal = value; }
-        public List<int> AsientosOcupados { get => aAsientosOcupados; }
-        public int AsientosDisponibles { get => aCapacidadTotal - aAsientosOcupados.Count; }
+        public List<int> AsientosOcupados => new List<int>(aAsientosOcupados); // Copia para seguridad
+        public int AsientosDisponibles => aCapacidadTotal - aAsientosOcupados.Count;
 
         public override string ToString()
         {
-            return $"{CodigoVuelo} {FechaVuelo} {HoraVuelo} {Origen} {Destino}";
+            return $"{CodigoVuelo} {FechaVuelo:yyyy-MM-dd} {HoraVuelo} {Origen}-{Destino} " +
+                   $"[{AsientosDisponibles}/{CapacidadTotal}] ${Precio}";
         }
     }
 }

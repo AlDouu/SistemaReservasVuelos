@@ -27,20 +27,25 @@ namespace Clases_para_Proyecto
                    $"Estado: {(aConfirmada ? "Confirmada" : "Pendiente")}";
         }
 
-        public void Confirmar()
+        public bool Confirmar()
         {
-            if (aVuelo.ReservarAsiento(aNroAsiento))
+            if (aVuelo != null && aVuelo.ReservarAsiento(aNroAsiento))
             {
                 aConfirmada = true;
+                return true;
             }
+            return false;
         }
 
-        public void Cancelar()
+        public bool Cancelar()
         {
-            if (aConfirmada && aVuelo.LiberarAsiento(aNroAsiento))
+            if (aConfirmada && aVuelo != null)
             {
+                bool asientoLiberado = aVuelo.LiberarAsiento(aNroAsiento);
                 aConfirmada = false;
+                return asientoLiberado;
             }
+            return false;
         }
 
         public static List<cReserva> CargarDesdeArchivo(string rutaArchivo, List<cPasajero> pasajeros, List<cVuelo> vuelos)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace Clases_para_Proyecto
 {
@@ -10,7 +9,7 @@ namespace Clases_para_Proyecto
         private cPasajero pasajero;
         private List<cVuelo> vuelos;
         private List<cReserva> reservas;
-        private cVuelo vueloSeleccionado;
+        private cVuelo? vueloSeleccionado;
 
         public frmReservar(cPasajero pPasajero, List<cVuelo> pVuelos, List<cReserva> pReservas)
         {
@@ -18,13 +17,11 @@ namespace Clases_para_Proyecto
             pasajero = pPasajero;
             vuelos = pVuelos;
             reservas = pReservas;
-
             CargarVuelos();
         }
 
         private void CargarVuelos()
         {
-            // Añadirlos en la tabla creada con columnas previamente
             dgvVuelos.Rows.Clear();
             foreach (var vuelo in vuelos)
             {
@@ -42,122 +39,100 @@ namespace Clases_para_Proyecto
             }
         }
 
-
-
         private void dgvVuelos_SelectionChanged(object sender, EventArgs e)
         {
-            if (dgvVuelos.SelectedRows.Count > 0)
+            if (dgvVuelos.SelectedRows.Count > 0 && dgvVuelos.SelectedRows[0].Cells[0].Value != null)
             {
-                string codigoVuelo = dgvVuelos.SelectedRows[0].Cells[0].Value.ToString();
-                vueloSeleccionado = vuelos.Find(v => v.CodigoVuelo == codigoVuelo);
-                btnConfirmar.Enabled = true;
-
-                // Cargar asientos disponibles
-                CargarAsientosDisponibles();
-            }
-            else
-            {
-                btnConfirmar.Enabled = false;
-            }
-        }
-
-        private void CargarAsientosDisponibles()
-        {
-            cmbAsientos.Items.Clear();
-            if (vueloSeleccionado != null)
-            {
-                for (int i = 1; i <= vueloSeleccionado.CapacidadTotal; i++)
+                string? codigoVuelo = dgvVuelos.SelectedRows[0].Cells[0].Value.ToString();
+                if (!string.IsNullOrEmpty(codigoVuelo))
                 {
-                    if (!vueloSeleccionado.AsientosOcupados.Contains(i))
-                    {
-                        cmbAsientos.Items.Add(i);
-                    }
-                }
-
-                if (cmbAsientos.Items.Count > 0)
-                {
-                    cmbAsientos.SelectedIndex = 0;
+                    vueloSeleccionado = vuelos.Find(v => v.CodigoVuelo == codigoVuelo);
+                    btnConfirmar.Enabled = (vueloSeleccionado != null && vueloSeleccionado.AsientosDisponibles > 0);
+                    return;
                 }
             }
+            btnConfirmar.Enabled = false;
+            vueloSeleccionado = null;
         }
-
-        /*
-        private void btnConfirmar_Click(object sender, EventArgs e)
-        {
-            if (vueloSeleccionado != null && cmbAsientos.SelectedItem != null)
-            {
-                int nroAsiento = (int)cmbAsientos.SelectedItem;
-                var reserva = new cReserva(pasajero, vueloSeleccionado, nroAsiento);
-                reserva.Confirmar();
-                reservas.Add(reserva);
-                pasajero.AgregarReserva(reserva);
-
-                // Guardar la reserva
-                cReserva.GuardarEnArchivo("reservas.txt", reservas);
-
-                MessageBox.Show("Reserva confirmada con éxito", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarVuelos();
-                CargarAsientosDisponibles();
-            }
-        }*/
-
-        private void btnVolver_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-
-
-
-
 
         private void btnConfirmar_Click_1(object sender, EventArgs e)
         {
-            // Buscar código de vuelo de tabla y guardarlo en la forma "12345678|AV101|15|true"
-            // ->  DNI | Cod Vuelo | NroAsiento | Confirmada (sin espacios)
-            //238574521
-            if (dgvVuelos.SelectedRows.Count > 0)
+            // Verificación más robusta de la selección
+            if (dgvVuelos.SelectedRows.Count == 0 ||
+                dgvVuelos.SelectedRows[0].Index < 0 ||
+                vueloSeleccionado == null)
             {
-                DataGridViewRow filaSeleccionada = dgvVuelos.SelectedRows[0];
+                MessageBox.Show("Seleccione un vuelo válido primero", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                string codigoVuelo = filaSeleccionada.Cells[0].Value?.ToString();
-                string origen = filaSeleccionada.Cells[1].Value?.ToString();
-                string destino = filaSeleccionada.Cells[2].Value?.ToString();
-                string fecha = filaSeleccionada.Cells[3].Value?.ToString();
-                string hora = filaSeleccionada.Cells[4].Value?.ToString();
-                string disponibilidad = filaSeleccionada.Cells[5].Value?.ToString();
-                string precio = filaSeleccionada.Cells[6].Value?.ToString();
+            try
+            {
+                // Obtener datos del vuelo seleccionado
+                DataGridViewRow fila = dgvVuelos.SelectedRows[0];
+                string codigoVuelo = fila.Cells[0].Value?.ToString() ?? "";
+                string origen = fila.Cells[1].Value?.ToString() ?? "";
+                string destino = fila.Cells[2].Value?.ToString() ?? "";
+                string fecha = fila.Cells[3].Value?.ToString() ?? "";
+                string hora = fila.Cells[4].Value?.ToString() ?? "";
+                string disponibilidad = fila.Cells[5].Value?.ToString() ?? "";
+                string precio = fila.Cells[6].Value?.ToString() ?? "";
 
+                // Confirmación con el usuario
                 string mensaje = $"¿Desea confirmar la reserva para el siguiente vuelo?\n\n" +
-                         $"Origen: {origen}\nDestino: {destino}\nFecha: {fecha}\nHora: {hora}\nDisponibilidad: {disponibilidad}\nPrecio: {precio}";
+                               $"Origen: {origen}\nDestino: {destino}\nFecha: {fecha}\n" +
+                               $"Hora: {hora}\nDisponibilidad: {disponibilidad}\nPrecio: {precio}";
 
-                DialogResult resultado = MessageBox.Show(mensaje, "Confirmar reserva", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult resultado = MessageBox.Show(mensaje, "Confirmar reserva",
+                                                       MessageBoxButtons.YesNo,
+                                                       MessageBoxIcon.Question);
 
                 if (resultado == DialogResult.Yes)
                 {
-                    // Se puede ir a la ventana de pagos o simplemente guardar en el archivo validando que este pasajero no haya hecho una reserva en este vuelo antes
-                    Console.WriteLine();
+                    // Asignar asiento automáticamente
+                    int nroAsiento = vueloSeleccionado.ObtenerProximoAsientoDisponible();
+                    if (nroAsiento == -1)
+                    {
+                        MessageBox.Show("No hay asientos disponibles", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
+                    // Crear reserva
+                    var reserva = new cReserva(pasajero, vueloSeleccionado, nroAsiento);
+                    if (reserva.Confirmar() == false)
+                    {
+                        MessageBox.Show("No se pudo confirmar la reserva", "Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    // Actualizar listas
+                    reservas.Add(reserva);
+                    pasajero.AgregarReserva(reserva);
+
+                    // Guardar en archivo
+                    cReserva.GuardarEnArchivo("reservas.txt", reservas);
+
+                    MessageBox.Show($"Reserva confirmada. Asiento: {nroAsiento}", "Éxito",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Actualizar vista
+                    CargarVuelos();
                 }
-                else { }
-
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Seleccione una fila primero", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al confirmar reserva: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void btnVolver_Click_1(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
-
-
-        // Se puede usar evento de click sobre la tabla para almacenar los valores mostrados
-        // Esto servirá solo para selecionar el codigo de vuelo (fecha y hora para validar que sea el mismo) y buscarlo en el atributo de vuelos pasado del anterior form
-
     }
 }
